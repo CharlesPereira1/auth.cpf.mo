@@ -39,7 +39,8 @@ export function* signIn({ payload }) {
 //   }
 // }
 
-export function signOut() {
+export function* signOut() {
+  yield delay(3000);
   history.push("/");
 }
 

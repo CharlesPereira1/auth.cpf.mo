@@ -12,7 +12,7 @@ export default function RouteWrapper({
   isPrivate, //pega a propriedade do router index.js e seta como false
   ...rest //traz o resto das propriedades
 }) {
-  const signed = store.getState().auth; //informa se o usuário está logado ou nao default=false
+  const signed = store.getState().auth.signed; //informa se o usuário está logado ou nao default=false
 
   //se signed estiver logado e o isprived for true ele volta para o login
   if (!signed && isPrivate) {
