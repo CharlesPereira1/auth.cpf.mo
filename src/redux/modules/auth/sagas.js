@@ -1,7 +1,7 @@
 import { all, takeLatest, call, put } from "redux-saga/effects";
 
-import api from "../../service/api";
-import history from "../../service/history";
+import api from "../../../service/api";
+import history from "../../../service/history";
 
 import { signInSuccess } from "./actions";
 
@@ -15,10 +15,11 @@ export function* signIn({ payload }) {
     password,
   });
 
-  //se der certo a requisiçao faz um request de accessToken
+  //se der certo a requisiçao faz um request de accessToken. Foi aplicado a desestruturaçao no access token
   const { accessToken } = response.data;
 
   yield put(signInSuccess(accessToken));
+  console.tron.log(accessToken, email, password);
 
   //envia para o dashboard
   history.push("/dashboard");

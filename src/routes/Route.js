@@ -5,12 +5,14 @@ import { Route, Redirect } from "react-router-dom";
 import AuthLayout from "../page/_layouts/auth";
 import DefaultLayout from "../page/_layouts/default";
 
+import { store } from "../store";
+
 export default function RouteWrapper({
   component: Component, //pega a propriedade do router index.js e tranforma em um component
-  isPrivate = false, //pega a propriedade do router index.js e seta como false
+  isPrivate, //pega a propriedade do router index.js e seta como false
   ...rest //traz o resto das propriedades
 }) {
-  const signed = false; //informa se o usuário está logado ou nao default=false
+  const signed = store.getState().auth; //informa se o usuário está logado ou nao default=false
 
   //se signed estiver logado e o isprived for true ele volta para o login
   if (!signed && isPrivate) {

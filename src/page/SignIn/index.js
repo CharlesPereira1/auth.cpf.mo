@@ -3,7 +3,7 @@ import { Form, Input } from "@rocketseat/unform";
 import * as Yup from "yup";
 
 import { useDispatch } from "react-redux";
-import { signInRequest } from "../../redux/auth/actions";
+import { signInRequest } from "../../store/modules/auth/actions";
 
 // import { Container } from './styles';
 
