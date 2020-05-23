@@ -10,7 +10,7 @@ import "./config/ReactotronConfig";
 import Routes from "./routes";
 import history from "./service/history";
 
-import { store, persistor } from "./store";
+import { store, persistor } from "./redux";
 
 function App() {
   return (

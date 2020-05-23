@@ -1,28 +1,51 @@
-import { all, takeLatest, call, put } from "redux-saga/effects";
+import { takeLatest, call, all, put, delay } from "redux-saga/effects";
 
 import api from "../../../service/api";
 import history from "../../../service/history";
 
-import { signInSuccess } from "./actions";
+import { signInSuccess, signFailure } from "./actions";
 
 export function* signIn({ payload }) {
-  //desestrutura o payload
-  const { email, password } = payload;
+  try {
+    const { email, password } = payload;
 
-  //faz a chamada passando os parametros
-  const response = yield call(api.post, "login", {
-    email,
-    password,
-  });
+    const response = yield call(api.post, "login", {
+      email,
+      password,
+    });
 
-  //se der certo a requisiçao faz um request de accessToken. Foi aplicado a desestruturaçao no access token
-  const { accessToken } = response.data;
+    yield delay(3000);
 
-  yield put(signInSuccess(accessToken));
-  console.tron.log(accessToken, email, password);
+    const { accessToken } = response.data;
 
-  //envia para o dashboard
-  history.push("/dashboard");
+    // api.defaults.headers.Authorization = `Bearer ${accessToken}`;
+
+    yield put(signInSuccess(accessToken));
+
+    history.push("/dashboard");
+  } catch (error) {
+    console.tron.log("Falha na autenticação, verifique seus dados.");
+    yield put(signFailure());
+  }
 }
 
-export default all([takeLatest("@auth/SIGN_IN_REQUEST", signIn)]);
+// export function setToken({ payload }) {
+//   if (!payload) return;
+
+//   const { token } = payload.auth;
+
+//   if (token) {
+//     api.defaults.headers.Authorization = `Bearer ${token}`;
+//   }
+// }
+
+export function* signOut() {
+  yield delay(3000);
+  history.push("/");
+}
+
+export default all([
+  // takeLatest("persist/REHYDRATE", setToken),
+  takeLatest("@auth/SIGN_IN_REQUEST", signIn),
+  takeLatest("@auth/SIGN_OUT", signOut),
+]);

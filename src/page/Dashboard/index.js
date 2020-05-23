@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 
 // import { Container } from './styles';
-import { signOut } from "../../store/modules/auth/actions";
+import { signOut } from "../../redux/modules/auth/actions";
 
 export default function Dashboard() {
   const dispatch = useDispatch();
