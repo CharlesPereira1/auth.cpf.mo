@@ -5,9 +5,9 @@ import { Provider } from "react-redux";
 import "./config/ReactotronConfig";
 
 import Routes from "./routes";
+import history from "./service/history";
 
 import store from "./redux";
-import history from "./service/history";
 
 function App() {
   return (
