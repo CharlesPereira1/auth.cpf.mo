@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Form, Input } from "@rocketseat/unform";
 import * as Yup from "yup";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { signInRequest } from "../../redux/modules/auth/actions";
 
 // import { Container } from './styles';
@@ -16,6 +16,7 @@ import { signInRequest } from "../../redux/modules/auth/actions";
 
 export default function SignIn() {
   const dispatch = useDispatch();
+  const loading = useSelector((state) => state.auth.loading);
 
   function handleSubmit({ email, password }) {
     dispatch(signInRequest({ email, password }));
@@ -42,7 +43,7 @@ export default function SignIn() {
           // onChange={(e) => setNewValor(e.target.value)}
         />
         <br /> <br />
-        <button type="submit">Acessar</button>
+        <button type="submit">{loading ? "Carregando..." : "Acessar"}</button>
       </Form>
     </>
   );
