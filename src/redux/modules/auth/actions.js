@@ -12,9 +12,9 @@ export function signInSuccess(accessToken) {
   };
 }
 
-export function signFailure() {
+export function signInFailure() {
   return {
-    type: "@auth/SIGN_FAILURE",
+    type: "@auth/SIGN_IN_FAILURE",
   };
 }
 

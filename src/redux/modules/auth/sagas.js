@@ -3,7 +3,8 @@ import { takeLatest, call, all, put, delay } from "redux-saga/effects";
 import api from "../../../service/api";
 import history from "../../../service/history";
 
-import { signInSuccess, signFailure } from "./actions";
+import { signInSuccess, signInFailure } from "./actions";
+import { toast } from "react-toastify";
 
 export function* signIn({ payload }) {
   try {
@@ -24,8 +25,8 @@ export function* signIn({ payload }) {
 
     history.push("/dashboard");
   } catch (error) {
-    console.tron.log("Falha na autenticação, verifique seus dados.");
-    yield put(signFailure());
+    toast.error("Falha na autenticação, verifique seus dados.");
+    yield put(signInFailure());
   }
 }
 
