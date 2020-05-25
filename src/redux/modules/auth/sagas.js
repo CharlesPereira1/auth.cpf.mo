@@ -19,26 +19,27 @@ export function* signIn({ payload }) {
 
     const { accessToken } = response.data;
 
-    // api.defaults.headers.Authorization = `Bearer ${accessToken}`;
+    api.defaults.headers.Authorization = `Bearer ${accessToken}`;
 
     yield put(signInSuccess(accessToken));
 
     history.push("/dashboard");
   } catch (error) {
     toast.error("Falha na autenticação, verifique seus dados.");
+    yield delay(3000);
     yield put(signInFailure());
   }
 }
 
-// export function setToken({ payload }) {
-//   if (!payload) return;
+export function setToken({ payload }) {
+  if (!payload) return;
 
-//   const { token } = payload.auth;
+  const { accessToken } = payload.auth;
 
-//   if (token) {
-//     api.defaults.headers.Authorization = `Bearer ${token}`;
-//   }
-// }
+  if (accessToken) {
+    api.defaults.headers.Authorization = `Bearer ${accessToken}`;
+  }
+}
 
 export function* signOut() {
   yield delay(3000);
@@ -46,7 +47,7 @@ export function* signOut() {
 }
 
 export default all([
-  // takeLatest("persist/REHYDRATE", setToken),
+  takeLatest("persist/REHYDRATE", setToken),
   takeLatest("@auth/SIGN_IN_REQUEST", signIn),
   takeLatest("@auth/SIGN_OUT", signOut),
 ]);
